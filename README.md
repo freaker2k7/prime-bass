@@ -7,11 +7,15 @@ You can adjust the number of notes, note duration, and the number of primes to g
 The app uses Tone.js to create a simple synthesizer and play the notes.<br>
 Each prime number is mapped to a bass guitar frequency, and the notes are played in sequence with a specified duration.<br>
 
-# Theory
+## Theory
 
 Prime numbers can end only with 1, 3, 7, or 9 (except for the prime number 2 and 5).<br>
 The bass guitar has 4 strings, and each string can play a note that ends with one of those digits. So we can map the prime numbers to the bass guitar frequencies based on their last digit, appending modulo number of frets.<br>
 Then we can play the notes in sequence to create a musical representation of the prime numbers.<br>
+
+## Demo
+
+Please see [the github page](https://freaker2k7.github.io/prime-bass/) to play around 😉
 
 # 💪
 
