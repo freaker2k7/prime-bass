@@ -2,6 +2,18 @@
 <html>
 
 <head>
+  <title>Prime Bass</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="A web app that generates bass tabs based on prime numbers and plays them using the Tone.js library.">
+  <meta name="keywords" content="JavaScript, Tone.js, bass tabs, prime numbers, music generation">
+  <meta name="author" content="Evgeny Kolyakov">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="icon" href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
+
   <style>
     * {
       box-sizing: border-box;
@@ -31,12 +43,33 @@
       align-items: center;
       justify-items: center;
     }
+
+    #github-corner {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 70px;
+      background-color: #d7d7d7;
+      border-radius: 0 0 0 30px;
+    }
+
+    #github-corner img {
+      border-radius: 50%;
+    }
   </style>
 
   <script src="https://unpkg.com/tone@latest/build/Tone.js"></script>
 </head>
 
 <body>
+  <a href="https://github.com/freaker2k7/prime-bass" id="github-corner" target="_blank" rel="noopener noreferrer">
+    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="40">
+  </a>
   <div id="root">
     <label for="frets">Frets:</label>
     <input type="number" id="frets" placeholder="Number of frets" value="19" min="10" max="32" />
