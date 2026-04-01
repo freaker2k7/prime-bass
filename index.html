@@ -131,44 +131,11 @@
 
   <script>
     let synth;
+    let events;
     let isPlaying = false;
+    
     const playButton = document.getElementById("play-button");
-
-    const tabs = {
-      1: [],
-      3: [],
-      7: [],
-      9: [],
-    };
-
-    const isPrime = (n) => {
-      const iEnd = Math.sqrt(n);
-      for (let i = 3; i < iEnd; ++i) {
-        if (n % i === 0) {
-          return false;
-        }
-      }
-
-      return true;
-    };
-
-    const setPrimes = (count, frets) => {
-      for (let i = 1; i < count; i += 2) {
-        if (isPrime(i)) {
-          const k = `${i % 10}`;
-          for (const t in tabs) {
-            if (t === k) {
-              tabs[t].push(i % frets);
-            } else {
-              tabs[t].push(null);
-            }
-          }
-        }
-      }
-
-      delete tabs[5];
-    }
-
+    
     // Standard bass tuning (Hz)
     const tuning = {
       1: 41.20,  // E1
@@ -177,36 +144,31 @@
       9: 98.00   // G2
     };
 
-    function fretToFreq(openFreq, fret) {
-      return openFreq * Math.pow(2, fret / 12);
-    }
-
-    function parseTab() {
-      const events = [];
-
-      for (let i = 0; i < tabs[1].length; i++) {
-        for (const t in tabs) {
-          const tab = tabs[t][i];
-
-          if (tab) {
-            events.push({
-              timeIndex: i,
-              freq: fretToFreq(tuning[t], parseInt(tab, 10))
-            });
-          }
+    const isPrime = (n) => {
+      if (n % 5 === 0) {
+        return false;
+      } 
+    
+    
+      const iEnd = Math.sqrt(n);
+      for (let i = 2; i < iEnd; ++i) {
+        if (n % i === 0) {
+          return false;
         }
       }
 
-      return events;
+      return true;
+    };
+
+    function fretToFreq(openFreq, fret, frets) {
+      return openFreq * Math.pow(2, fret / frets);
     }
 
     async function playTab() {
-      const frets = parseInt(document.getElementById("frets").value, 10);
-      const numNotes = parseInt(document.getElementById("notes").value, 10);
-      const duration = parseInt(document.getElementById("duration").value, 10);
-      const numPrimes = parseInt(document.getElementById("primes").value, 10);
-
-      setPrimes(numPrimes, frets);
+      const frets = parseInt(document.getElementById("frets").value);
+      const numNotes = parseInt(document.getElementById("notes").value);
+      const duration = parseInt(document.getElementById("duration").value);
+      const numPrimes = parseInt(document.getElementById("primes").value);
 
       await Tone.start();
 
@@ -221,19 +183,26 @@
         }
       }).toDestination();
 
-      const events = parseTab();
+      const events = setPrimes(numPrimes, frets);
 
       const stepDuration = duration / 1000; // Convert ms to seconds
 
       const now = Tone.now();
-
-      events.forEach(e => {
-        synth.triggerAttackRelease(
-          e.freq,
-          `${numNotes}n`,
-          now + e.timeIndex * stepDuration
-        );
-      });
+      
+      for (let i = 1, j = 0; i < count; i += 2, ++j) {
+        if (isPrime(i)) {
+          const k = `${i % 10}`;
+          for (const t in tabs) {
+            if (t === k) {
+              synth.triggerAttackRelease(
+                fretToFreq(tuning[t], i % frets, frets),
+                `${numNotes}n`,
+                now + j * stepDuration
+              );
+            }
+          }
+        }
+      }
 
       isPlaying = true;
     }
