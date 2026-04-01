@@ -46,6 +46,11 @@
       cursor: pointer;
     }
 
+    input[type="submit"]:hover {
+      background-color: #45a049;
+      font-weight: bold;
+    }
+
     input:not([type="submit"]):focus {
       border-color: #4CAF50;
       box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
@@ -57,10 +62,6 @@
       margin-top: 10px;
       font-weight: bold;
       font-size: 14px;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #45a049;
     }
 
     #root {
@@ -124,11 +125,15 @@
       <input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" />
       <label for="duration">Note Duration (ms):</label>
       <input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" />
-      <input type="submit" value="Play Bass" />
+      <input type="submit" value="Play Bass" id="play-button" />
     </form>
   </div>
 
   <script>
+    let synth;
+    let isPlaying = false;
+    const playButton = document.getElementById("play-button");
+
     const tabs = {
       1: [],
       3: [],
@@ -205,7 +210,7 @@
 
       await Tone.start();
 
-      const synth = new Tone.MonoSynth({
+      synth = new Tone.MonoSynth({
         oscillator: { type: "sawtooth" },
         filter: { Q: 2, type: "lowpass", rolloff: -24 },
         envelope: {
@@ -229,11 +234,29 @@
           now + e.timeIndex * stepDuration
         );
       });
+
+      isPlaying = true;
+    }
+
+    async function stopTab() {
+      if (synth) {
+        synth.dispose();
+        synth = null;
+      }
+
+      isPlaying = false;
     }
 
     document.getElementById("form").addEventListener("submit", (e) => {
       e.preventDefault();
-      playTab();
+
+      if (isPlaying) {
+        stopTab();
+        playButton.value = "Play Bass";
+      } else {
+        playTab();
+        playButton.value = "Stop Bass";
+      }
     });
   </script>
 </body>
