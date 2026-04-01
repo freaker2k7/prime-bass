@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    input {
+      margin: 10px;
+      padding: 10px;
+      width: 170px;
+    }
+
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      width: 170px;
+    }
+
+    #root {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-items: center;
+    }
+  </style>
+
+  <script src="https://unpkg.com/tone@latest/build/Tone.js"></script>
+</head>
+
+<body>
+  <div id="root">
+    <label for="notes">Notes:</label>
+    <input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" />
+    <label for="duration">Note Duration (ms):</label>
+    <input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" />
+    <label for="primes">Number of Primes:</label>
+    <input type="number" id="primes" placeholder="Number of Primes" value="100" min="1" />
+    <button onclick="playTab()">Play Bass Tab</button>
+  </div>
+
+  <script>
+    const tabs = {
+      1: [],
+      3: [],
+      7: [],
+      9: [],
+    };
+
+    const isPrime = (n) => {
+      const iEnd = Math.sqrt(n);
+      for (let i = 3; i < iEnd; ++i) {
+        if (n % i === 0) {
+          return false;
+        }
+      }
+
+      return true;
+    };
+
+    const setPrimes = (count) => {
+      for (let i = 1; i < count; i += 2) {
+        if (isPrime(i)) {
+          const k = `${i % 10}`;
+          for (const t in tabs) {
+            if (t === k) {
+              tabs[t].push(i % 19);
+            } else {
+              tabs[t].push(null);
+            }
+          }
+        }
+      }
+    }
+
+    // Standard bass tuning (Hz)
+    const tuning = {
+      1: 41.20,  // E1
+      3: 55.00,  // A1
+      7: 73.42,  // D2
+      9: 98.00   // G2
+    };
+
+    function fretToFreq(openFreq, fret) {
+      return openFreq * Math.pow(2, fret / 12);
+    }
+
+    function parseTab() {
+      const events = [];
+
+      for (let i = 0; i < tabs[1].length; i++) {
+        for (const t in tabs) {
+          const tab = tabs[t][i];
+
+          if (tab) {
+            events.push({
+              timeIndex: i,
+              freq: fretToFreq(tuning[t], parseInt(tab, 10))
+            });
+          }
+        }
+      }
+
+      return events;
+    }
+
+    async function playTab() {
+      const numNotes = parseInt(document.getElementById("notes").value, 10);
+      const duration = parseInt(document.getElementById("duration").value, 10);
+      const numPrimes = parseInt(document.getElementById("primes").value, 10);
+
+      setPrimes(numPrimes);
+
+      await Tone.start();
+
+      const synth = new Tone.MonoSynth({
+        oscillator: { type: "sawtooth" },
+        filter: { Q: 2, type: "lowpass", rolloff: -24 },
+        envelope: {
+          attack: 0.01,
+          decay: 0.1,
+          sustain: 0.5,
+          release: 1
+        }
+      }).toDestination();
+
+      const events = parseTab();
+
+      const stepDuration = duration / 1000; // Convert ms to seconds
+
+      const now = Tone.now();
+
+      events.forEach(e => {
+        synth.triggerAttackRelease(
+          e.freq,
+          `${numNotes}n`,
+          now + e.timeIndex * stepDuration
+        );
+      });
+    }
+  </script>
+</body>
+
+</html>
