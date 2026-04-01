@@ -187,18 +187,13 @@
 
       const now = Tone.now();
       
-      for (let i = 1, j = 0; i < count; i += 2, ++j) {
+      for (let i = 1, j = 0; j < numPrimes; i += 2) {
         if (isPrime(i)) {
-          const k = `${i % 10}`;
-          for (const t in tabs) {
-            if (t === k) {
-              synth.triggerAttackRelease(
-                fretToFreq(tuning[t], i % frets, frets),
-                `${numNotes}n`,
-                now + j * stepDuration
-              );
-            }
-          }
+          synth.triggerAttackRelease(
+            fretToFreq(tuning[i % 10], i % frets, frets),
+            `${numNotes}n`,
+            now + ++j * stepDuration
+          );
         }
       }
 
