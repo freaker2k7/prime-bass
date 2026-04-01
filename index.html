@@ -131,8 +131,7 @@
 
   <script>
     let synth;
-    let events;
-    let isPlaying = false;
+    let isPlaying;
     
     const playButton = document.getElementById("play-button");
     
@@ -147,9 +146,8 @@
     const isPrime = (n) => {
       if (n % 5 === 0) {
         return false;
-      } 
-    
-    
+      }
+
       const iEnd = Math.sqrt(n);
       for (let i = 2; i < iEnd; ++i) {
         if (n % i === 0) {
@@ -164,12 +162,13 @@
       return openFreq * Math.pow(2, fret / frets);
     }
 
-    async function playTab() {
+    async function play() {
+      const duration = parseInt(document.getElementById("duration").value) / 1000; // in seconds
       const frets = parseInt(document.getElementById("frets").value);
       const numNotes = parseInt(document.getElementById("notes").value);
-      const duration = parseInt(document.getElementById("duration").value);
       const numPrimes = parseInt(document.getElementById("primes").value);
-
+      const now = Tone.now();
+      
       await Tone.start();
 
       synth = new Tone.MonoSynth({
@@ -182,10 +181,6 @@
           release: 1
         }
       }).toDestination();
-
-      const stepDuration = duration / 1000; // Convert ms to seconds
-
-      const now = Tone.now();
       
       for (let i = 1, j = 0; j < numPrimes; i += 2) {
         if (isPrime(i)) {
@@ -200,7 +195,7 @@
       isPlaying = true;
     }
 
-    async function stopTab() {
+    function stop() {
       if (synth) {
         synth.dispose();
         synth = null;
@@ -213,10 +208,10 @@
       e.preventDefault();
 
       if (isPlaying) {
-        stopTab();
+        stop();
         playButton.value = "Play Bass";
       } else {
-        playTab();
+        play ();
         playButton.value = "Stop Bass";
       }
     });
