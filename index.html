@@ -179,7 +179,7 @@
       }
 
       const iEnd = Math.sqrt(n);
-      for (let i = 2; i < iEnd; ++i) {
+      for (let i = 2; i <= iEnd; ++i) {
         if (n % i === 0) {
           return false;
         }
@@ -215,6 +215,7 @@
         }
       }).toDestination();
 
+      // No point in checking even numbers, so we start from 1 and increment by 2
       for (let i = 1, j = 0; j < numPrimes; i += 2) {
         if (isPrime(i)) {
           synth.triggerAttackRelease(
