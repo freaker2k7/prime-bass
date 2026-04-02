@@ -4,10 +4,10 @@
 
 This project is currently maintained on a best-effort basis.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| latest  | ✅ Yes             |
-| older   | ❌ No              |
+| Version | Supported |
+| ------- | --------- |
+| latest  | ✅ Yes    |
+| older   | ❌ No     |
 
 Only the latest version of the repository receives security updates.
 
