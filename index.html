@@ -245,10 +245,10 @@
       e.preventDefault();
 
       if (isPlaying) {
-        stop();
-      } else {
-        play();
+        return stop();
       }
+
+      play();
     });
   </script>
 </body>
