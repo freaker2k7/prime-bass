@@ -17,6 +17,14 @@ Then we can play the notes in sequence to create a musical representation of the
 
 Please see [the github page](https://freaker2k7.github.io/prime-bass/) to play around 😉
 
+## TODO
+
+* Add tuning frequencies to the UI.
+* Add the synthesizer settings to the UI.
+* Add more instruments and tunings.
+* Add a visual representation of the notes being played.
+* Add a way to save the generated music as a file.
+
 # 💪
 
 Made with 🧠 & ❤️ by [Evgeny K.](https://github.com/freaker2k7)
