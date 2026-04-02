@@ -31,23 +31,42 @@ async function play() {
 	(document.getElementById('play-button') as HTMLInputElement).value = 'Stop Bass';
 	isPlaying = true;
 
+	const oscillatorType = (document.getElementById('oscillator') as HTMLSelectElement).value as
+		| 'sine'
+		| 'square'
+		| 'triangle'
+		| 'sawtooth';
+	const filterType = (document.getElementById('filter') as HTMLSelectElement).value as
+		| 'lowpass'
+		| 'highpass'
+		| 'bandpass'
+		| 'notch'
+		| 'allpass'
+		| 'peaking'
+		| 'lowshelf'
+		| 'highshelf';
+	const filterQuality = parseInt((document.getElementById('filter-quality') as HTMLInputElement).value || '2');
+	const rolloff = parseInt((document.getElementById('rolloff') as HTMLInputElement).value || '-24') as
+		| -12
+		| -24
+		| -48
+		| -96;
 	const duration = parseInt((document.getElementById('duration') as HTMLInputElement).value || '150') / 1000; // in seconds
 	const frets = parseInt((document.getElementById('frets') as HTMLInputElement).value || '19');
 	const numNotes = parseInt((document.getElementById('notes') as HTMLInputElement).value || '8');
 	const numPrimes = parseInt((document.getElementById('primes') as HTMLInputElement).value || '100');
+	const attack = parseFloat((document.getElementById('attack') as HTMLInputElement).value || '0.01');
+	const decay = parseFloat((document.getElementById('decay') as HTMLInputElement).value || '0.1');
+	const sustain = parseFloat((document.getElementById('sustain') as HTMLInputElement).value || '0.5');
+	const release = parseFloat((document.getElementById('release') as HTMLInputElement).value || '1');
 	const now = Tone.now();
 
 	await Tone.start();
 
 	synth = new Tone.MonoSynth({
-		oscillator: { type: 'sawtooth' },
-		filter: { Q: 2, type: 'lowpass', rolloff: -24 },
-		envelope: {
-			attack: 0.01,
-			decay: 0.1,
-			sustain: 0.5,
-			release: 1,
-		},
+		oscillator: { type: oscillatorType },
+		filter: { Q: filterQuality, type: filterType, rolloff },
+		envelope: { attack, decay, sustain, release },
 	}).toDestination();
 
 	/*
@@ -93,10 +112,12 @@ function stop() {
 	play();
 });
 
-document.querySelectorAll('input[type="number"]').forEach((input) => {
-	input.addEventListener('input', () => {
-		stop();
-	});
+(document.getElementById('advanced-settings-toggle') as HTMLInputElement).addEventListener('click', () => {
+	(document.getElementById('advanced-settings') as HTMLDivElement).classList.toggle('open');
+});
+
+document.querySelectorAll('input[type="number"], select').forEach((input) => {
+	input.addEventListener('input', stop);
 });
 
 document.querySelectorAll('#frequencies-controls input').forEach((input) => {

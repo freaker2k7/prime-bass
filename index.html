@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="robots" content="index, follow, cache" />
+		<meta name="format-detection" content="telephone=no" />
 
 		<meta name="description" content="%VITE_SUBTITLE%" />
 		<meta name="keywords" content="JavaScript, Tone.js, bass tabs, prime numbers, music generation" />
@@ -42,6 +43,13 @@
 		</a>
 		<div id="root">
 			<form id="form">
+				<label for="oscillator">Oscillator Type:</label>
+				<select name="oscillator" id="oscillator">
+					<option value="sine">Sine</option>
+					<option value="square">Square</option>
+					<option value="triangle">Triangle</option>
+					<option value="sawtooth" selected>Sawtooth</option>
+				</select>
 				<label for="primes">Number of Primes:</label>
 				<input type="number" id="primes" placeholder="Number of Primes" value="100" min="2" step="1" />
 				<label for="frets">Number of Frets:</label>
@@ -50,28 +58,57 @@
 				<input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" step="1" />
 				<label for="duration">Note Duration (ms):</label>
 				<input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" step="1" />
-				<hr />
-				<div id="frequencies">
-					<div id="frequencies-controls">
-						<input type="range" id="frequencies-range-e-1" min="41.2" max="79.5" step="0.01" value="41.2" />
-						<input type="range" id="frequencies-range-a-3" min="55" max="110" step="0.01" value="55.0" />
-						<input type="range" id="frequencies-range-d-7" min="73.4" max="146.8" step="0.01" value="73.42" />
-						<input type="range" id="frequencies-range-g-9" min="98" max="196" step="0.01" value="98.0" />
-					</div>
-					<div id="frequencies-labels">
-						<label for="frequencies-range-e-1">E</label>
-						<label for="frequencies-range-a-3">A</label>
-						<label for="frequencies-range-d-7">D</label>
-						<label for="frequencies-range-g-9">G</label>
-					</div>
-					<div id="frequencies-values">
-						<span id="frequencies-range-e-1-value">41.20 Hz</span>
-						<span id="frequencies-range-a-3-value">55.00 Hz</span>
-						<span id="frequencies-range-d-7-value">73.42 Hz</span>
-						<span id="frequencies-range-g-9-value">98.00 Hz</span>
+				<button type="button" id="advanced-settings-toggle">Advanced Settings</button>
+				<div id="advanced-settings">
+					<label for="filter">Filter Type:</label>
+					<select name="filter" id="filter">
+						<option value="lowpass" selected>Lowpass</option>
+						<option value="highpass">Highpass</option>
+						<option value="bandpass">Bandpass</option>
+						<option value="notch">Notch</option>
+						<option value="allpass">Allpass</option>
+						<option value="peaking">Peaking</option>
+						<option value="lowshelf">Lowshelf</option>
+						<option value="highshelf">Highshelf</option>
+					</select>
+					<label for="rolloff">Filter Rolloff:</label>
+					<select name="rolloff" id="rolloff">
+						<option value="-12">-12 dB/octave</option>
+						<option value="-24" selected>-24 dB/octave</option>
+						<option value="-48">-48 dB/octave</option>
+						<option value="-96">-96 dB/octave</option>
+					</select>
+					<label for="filter-quality">Filter Quality:</label>
+					<input type="number" id="filter-quality" placeholder="Filter Quality" value="2" min="0" step="1" />
+					<label for="attack">Attack:</label>
+					<input type="number" id="attack" placeholder="Attack" value="0.01" min="0" step="0.01" />
+					<label for="decay">Decay:</label>
+					<input type="number" id="decay" placeholder="Decay" value="0.1" min="0" step="0.01" />
+					<label for="sustain">Sustain:</label>
+					<input type="number" id="sustain" placeholder="Sustain" value="0.5" min="0" max="1" step="0.01" />
+					<label for="release">Release:</label>
+					<input type="number" id="release" placeholder="Release" value="1" min="0" step="0.01" />
+					<div id="frequencies">
+						<div id="frequencies-controls">
+							<input type="range" id="frequencies-range-e-1" min="41.2" max="79.5" step="0.01" value="41.2" />
+							<input type="range" id="frequencies-range-a-3" min="55" max="110" step="0.01" value="55.0" />
+							<input type="range" id="frequencies-range-d-7" min="73.4" max="146.8" step="0.01" value="73.42" />
+							<input type="range" id="frequencies-range-g-9" min="98" max="196" step="0.01" value="98.0" />
+						</div>
+						<div id="frequencies-labels">
+							<label for="frequencies-range-e-1">E</label>
+							<label for="frequencies-range-a-3">A</label>
+							<label for="frequencies-range-d-7">D</label>
+							<label for="frequencies-range-g-9">G</label>
+						</div>
+						<div id="frequencies-values">
+							<span id="frequencies-range-e-1-value">41.20 Hz</span>
+							<span id="frequencies-range-a-3-value">55.00 Hz</span>
+							<span id="frequencies-range-d-7-value">73.42 Hz</span>
+							<span id="frequencies-range-g-9-value">98.00 Hz</span>
+						</div>
 					</div>
 				</div>
-				<hr />
 				<input type="submit" value="Play Bass" id="play-button" />
 			</form>
 		</div>
