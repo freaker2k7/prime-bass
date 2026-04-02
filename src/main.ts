@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import './main.scss';
 
 let isPlaying: boolean = false;
 let synth: Tone.MonoSynth | null = null;
