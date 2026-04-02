@@ -36,7 +36,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to thi
 
 Feel free to contribute by submitting a pull request or opening an issue with your ideas and suggestions!<br>
 
-- Add tuning frequencies to the UI.
 - Add the synthesizer settings to the UI.
 - Add more instruments and tunings.
 - Add a visual representation of the notes being played.

@@ -50,6 +50,28 @@
 				<input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" step="1" />
 				<label for="duration">Note Duration (ms):</label>
 				<input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" step="1" />
+				<hr />
+				<div id="frequencies">
+					<div id="frequencies-controls">
+						<input type="range" id="frequencies-range-e-1" min="41.2" max="79.5" step="0.01" value="41.2" />
+						<input type="range" id="frequencies-range-a-3" min="55" max="110" step="0.01" value="55.0" />
+						<input type="range" id="frequencies-range-d-7" min="73.4" max="146.8" step="0.01" value="73.42" />
+						<input type="range" id="frequencies-range-g-9" min="98" max="196" step="0.01" value="98.0" />
+					</div>
+					<div id="frequencies-labels">
+						<label for="frequencies-range-e-1">E</label>
+						<label for="frequencies-range-a-3">A</label>
+						<label for="frequencies-range-d-7">D</label>
+						<label for="frequencies-range-g-9">G</label>
+					</div>
+					<div id="frequencies-values">
+						<span id="frequencies-range-e-1-value">41.20 Hz</span>
+						<span id="frequencies-range-a-3-value">55.00 Hz</span>
+						<span id="frequencies-range-d-7-value">73.42 Hz</span>
+						<span id="frequencies-range-g-9-value">98.00 Hz</span>
+					</div>
+				</div>
+				<hr />
 				<input type="submit" value="Play Bass" id="play-button" />
 			</form>
 		</div>

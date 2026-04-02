@@ -92,3 +92,20 @@ function stop() {
 
 	play();
 });
+
+document.querySelectorAll('input[type="number"]').forEach((input) => {
+	input.addEventListener('input', () => {
+		stop();
+	});
+});
+
+document.querySelectorAll('#frequencies-controls input').forEach((input) => {
+	input.addEventListener('input', () => {
+		stop();
+
+		const tab = parseInt(input.id.split('-').slice(-1)[0]);
+		tuning[tab as keyof typeof tuning] = parseFloat((input as HTMLInputElement).value);
+		(document.getElementById(`${input.id}-value`) as HTMLSpanElement).textContent =
+			`${Number((input as HTMLInputElement).value).toFixed(2)} Hz`;
+	});
+});

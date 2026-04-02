@@ -42,10 +42,15 @@ input {
 		}
 	}
 
-	&:not([type='submit']):focus {
+	&[type='number']:focus {
 		border-color: #4caf50;
 		box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 		font-weight: bold;
+	}
+
+	&[type='range'] {
+		writing-mode: vertical-lr;
+		transform: rotate(180deg);
 	}
 }
 
@@ -96,5 +101,41 @@ label {
 
 	img {
 		border-radius: 50%;
+	}
+}
+
+#frequencies {
+	margin-top: 20px;
+	width: 100%;
+
+	#frequencies-controls,
+	#frequencies-labels,
+	#frequencies-values {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	#frequencies-controls {
+		input {
+			width: 30px;
+		}
+	}
+
+	#frequencies-labels {
+		label {
+			width: 50px;
+		}
+	}
+
+	#frequencies-values {
+		span {
+			width: 50px;
+			font-size: 12px;
+			font-weight: bold;
+		}
 	}
 }
