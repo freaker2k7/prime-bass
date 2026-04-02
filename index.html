@@ -21,7 +21,8 @@
     }
 
     body {
-      padding: 20px;
+      padding: 0;
+      margin: 0;
       background: url('https://i.imgur.com/pdYSl4J.png') no-repeat center center fixed;
       background-size: cover;
     }
@@ -72,7 +73,7 @@
     }
 
     #form {
-      margin-top: 50px;
+      margin-top: 80px;
       width: 300px;
       background-color: #edeae3;
       padding: 20px;
@@ -132,9 +133,9 @@
   <script>
     let synth;
     let isPlaying;
-    
+
     const playButton = document.getElementById("play-button");
-    
+
     // Standard bass tuning (Hz)
     const tuning = {
       1: 41.20,  // E1
@@ -168,7 +169,7 @@
       const numNotes = parseInt(document.getElementById("notes").value);
       const numPrimes = parseInt(document.getElementById("primes").value);
       const now = Tone.now();
-      
+
       await Tone.start();
 
       synth = new Tone.MonoSynth({
@@ -181,13 +182,13 @@
           release: 1
         }
       }).toDestination();
-      
+
       for (let i = 1, j = 0; j < numPrimes; i += 2) {
         if (isPrime(i)) {
           synth.triggerAttackRelease(
             fretToFreq(tuning[i % 10], i % frets, frets),
             `${numNotes}n`,
-            now + ++j * stepDuration
+            now + duration * ++j
           );
         }
       }
@@ -211,7 +212,7 @@
         stop();
         playButton.value = "Play Bass";
       } else {
-        play ();
+        play();
         playButton.value = "Stop Bass";
       }
     });
