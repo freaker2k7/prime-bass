@@ -43,13 +43,6 @@
 		</a>
 		<div id="root">
 			<form id="form">
-				<label for="oscillator">Oscillator Type:</label>
-				<select name="oscillator" id="oscillator">
-					<option value="sine">Sine</option>
-					<option value="square">Square</option>
-					<option value="triangle">Triangle</option>
-					<option value="sawtooth" selected>Sawtooth</option>
-				</select>
 				<label for="primes">Number of Primes:</label>
 				<input type="number" id="primes" placeholder="Number of Primes" value="100" min="2" step="1" />
 				<label for="frets">Number of Frets:</label>
@@ -60,6 +53,13 @@
 				<input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" step="1" />
 				<button type="button" id="advanced-settings-toggle">Advanced Settings</button>
 				<div id="advanced-settings">
+					<label for="oscillator">Oscillator Type:</label>
+					<select name="oscillator" id="oscillator">
+						<option value="sine">Sine</option>
+						<option value="square">Square</option>
+						<option value="triangle">Triangle</option>
+						<option value="sawtooth" selected>Sawtooth</option>
+					</select>
 					<label for="filter">Filter Type:</label>
 					<select name="filter" id="filter">
 						<option value="lowpass" selected>Lowpass</option>
