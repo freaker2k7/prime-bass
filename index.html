@@ -162,8 +162,6 @@
     let isPlaying;
     let synth;
 
-    const playButton = document.getElementById("play-button");
-
     // Standard bass tuning (Hz)
     const tuning = {
       1: 41.20,  // E1
@@ -188,7 +186,7 @@
     }
 
     async function play() {
-      playButton.value = "Stop Bass";
+      document.getElementById("play-button").value = "Stop Bass";
       isPlaying = true;
 
       const duration = parseInt(document.getElementById("duration").value || 150) / 1000; // in seconds
@@ -233,7 +231,7 @@
     }
 
     function stop() {
-      playButton.value = "Play Bass";
+      document.getElementById("play-button").value = "Play Bass";
       isPlaying = false;
 
       if (synth) {
