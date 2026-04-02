@@ -10,7 +10,8 @@ Each prime number is mapped to a bass guitar frequency, and the notes are played
 ## Theory
 
 Prime numbers can end only with 1, 3, 7 or 9 (except for the prime numbers 2 and 5).<br>
-The bass guitar has 4 strings, and each string can play a note that ends with one of those digits. So we can map the prime numbers to the bass guitar frequencies based on their last digit, appending modulo number of frets.<br>
+The bass guitar has 4 strings, and each string can play a note that ends with one of those digits.<br>
+So we can map the prime numbers to the bass guitar frequencies based on their last digit, appending modulo number of frets.<br>
 Then we can play the notes in sequence to create a musical representation of the prime numbers.<br>
 
 ## Demo
