@@ -6,11 +6,31 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="index, follow, cache">
+
   <meta name="description"
     content="A web app that generates bass tabs based on prime numbers and plays them using the Tone.js library.">
   <meta name="keywords" content="JavaScript, Tone.js, bass tabs, prime numbers, music generation">
   <meta name="author" content="Evgeny Kolyakov">
   <meta name="theme-color" content="#000000">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Prime Bass">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
+
+  <meta property="og:title" content="Prime Bass">
+  <meta property="og:description"
+    content="A web app that generates bass tabs based on prime numbers and plays them using the Tone.js library.">
+  <meta property="og:image" content="https://i.imgur.com/pdYSl4J.png">
+  <meta property="og:url" content="https://freaker2k7.github.io/prime-bass/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Prime Bass">
+  <meta name="twitter:description"
+    content="A web app that generates bass tabs based on prime numbers and plays them using the Tone.js library.">
+  <meta name="twitter:image" content="https://i.imgur.com/pdYSl4J.png">
 
   <link rel="icon" href="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png">
 
@@ -121,26 +141,26 @@
 </head>
 
 <body>
-  <a href="https://github.com/freaker2k7/prime-bass" id="github-corner" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/freaker2k7/prime-bass" id="github-corner" target="_blank">
     <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="40">
   </a>
   <div id="root">
     <form id="form">
       <label for="primes">Number of Primes:</label>
-      <input type="number" id="primes" placeholder="Number of Primes" value="100" min="1" />
+      <input type="number" id="primes" placeholder="Number of Primes" value="100" min="1" step="1" />
       <label for="frets">Number of Frets:</label>
-      <input type="number" id="frets" placeholder="Number of frets" value="19" min="10" max="32" />
+      <input type="number" id="frets" placeholder="Number of frets" value="19" min="10" max="32" step="1" />
       <label for="notes">Number of Notes:</label>
-      <input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" />
+      <input type="number" id="notes" placeholder="Number of Notes" value="8" min="1" max="128" step="1" />
       <label for="duration">Note Duration (ms):</label>
-      <input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" />
+      <input type="number" id="duration" placeholder="Note Duration (ms)" value="150" min="50" max="1000" step="1" />
       <input type="submit" value="Play Bass" id="play-button" />
     </form>
   </div>
 
   <script>
-    let synth;
     let isPlaying;
+    let synth;
 
     const playButton = document.getElementById("play-button");
 
@@ -153,6 +173,7 @@
     };
 
     const isPrime = (n) => {
+      // 5 is the only prime number that ends with 5
       if (n % 5 === 0) {
         return false;
       }
@@ -172,6 +193,9 @@
     }
 
     async function play() {
+      playButton.value = "Stop Bass";
+      isPlaying = true;
+
       const duration = parseInt(document.getElementById("duration").value) / 1000; // in seconds
       const frets = parseInt(document.getElementById("frets").value);
       const numNotes = parseInt(document.getElementById("notes").value);
@@ -200,17 +224,16 @@
           );
         }
       }
-
-      isPlaying = true;
     }
 
     function stop() {
+      playButton.value = "Play Bass";
+      isPlaying = false;
+
       if (synth) {
         synth.dispose();
         synth = null;
       }
-
-      isPlaying = false;
     }
 
     document.getElementById("form").addEventListener("submit", (e) => {
@@ -218,10 +241,8 @@
 
       if (isPlaying) {
         stop();
-        playButton.value = "Play Bass";
       } else {
         play();
-        playButton.value = "Stop Bass";
       }
     });
   </script>
