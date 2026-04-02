@@ -1,0 +1,29 @@
+{
+	"name": "wallet",
+	"private": true,
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "vite --host 0.0.0.0",
+		"build": "tsc -b && vite build",
+		"lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+		"format": "prettier --write '**/*.scss'  '**/*.html' '**/*.cjs' '**/*.js' '**/*.ts' --ignore-path .prettierignore",
+		"format-check": "prettier '**/*.scss'  '**/*.html' '**/*.cjs' '**/*.js' '**/*.ts' --ignore-path .prettierignore --check",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@types/node": "25.3.5",
+		"@typescript-eslint/eslint-plugin": "8.56.1",
+		"@typescript-eslint/parser": "8.56.1",
+		"eslint": "8.57.1",
+		"prettier": "3.4.1",
+		"sass": "1.81.0",
+		"typescript": "5.9.3",
+		"vite": "7.3.1",
+		"vite-compatible-readable-stream": "3.6.1",
+		"vite-plugin-minify": "2.1.0",
+		"vite-plugin-singlefile": "2.3.0"
+	},
+	"dependencies": {
+		"tone": "15.1.22"
+	}
+}
