@@ -86,7 +86,7 @@ label {
 }
 
 #form {
-	margin: 100px auto;
+	margin: 100px auto 50px auto;
 	width: 300px;
 	background-color: #edeae3;
 	padding: 20px;
@@ -224,5 +224,19 @@ button {
 
 	&.open {
 		display: block;
+	}
+}
+
+#tabs {
+	margin-bottom: 50px;
+
+	div {
+		font-size: 16px;
+		font-weight: bold;
+		white-space: pre;
+
+		@media screen and (max-width: 768px) {
+			font-size: 7px;
+		}
 	}
 }

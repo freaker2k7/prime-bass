@@ -1,10 +1,12 @@
 import * as Tone from 'tone';
 import './main.scss';
 import type { FilterRollOff, FilterType, OscillatorType } from './types';
+import { Visualizer } from './visualizer';
 
 let isPlaying: boolean = false;
 let recorder: MediaRecorder | null = null;
 let synth: Tone.MonoSynth | null = null;
+let visualizer: Visualizer | null = null;
 
 // Standard bass tuning (Hz)
 const tuning = {
@@ -89,6 +91,11 @@ async function play(e: SubmitEvent) {
 	const filterEnvelopeRelease = parseFloat((document.getElementById('release') as HTMLInputElement).value || '1');
 	const now = Tone.now();
 
+	visualizer = new Visualizer(document.getElementById('tabs') as HTMLDivElement, {
+		speed: eventDuration * 1000,
+		charWidth: 10,
+	});
+
 	await Tone.start();
 
 	synth = new Tone.MonoSynth({
@@ -117,7 +124,9 @@ async function play(e: SubmitEvent) {
 	*/
 
 	synth.triggerAttackRelease(fretToFreq(tuning[1], 1, numFrets), `${numNotes}n`, now + eventDuration);
+	visualizer.noteOn(1, 1);
 	synth.triggerAttackRelease(fretToFreq(tuning[3], 3, numFrets), `${numNotes}n`, now + eventDuration * 2);
+	visualizer.noteOn(3, 3);
 
 	/*
 	No point in checking even numbers, so we start from 7 and increment by 2
@@ -130,6 +139,7 @@ async function play(e: SubmitEvent) {
 				`${numNotes}n`,
 				now + eventDuration * ++j,
 			);
+			visualizer.noteOn(i % 10, i % numFrets);
 		}
 	}
 
@@ -137,15 +147,21 @@ async function play(e: SubmitEvent) {
 	const stopAt = now + eventDuration * (numPrimes + 1);
 	synth.triggerRelease(stopAt);
 	Tone.getDraw().schedule(stop, stopAt);
+
+	visualizer.start();
 }
 
 function stop() {
+	console.log('Stopping...');
+
 	(document.getElementById('play-button') as HTMLInputElement).value = '▶';
 	(document.getElementById('record-button') as HTMLInputElement).value = '⏺';
 	isPlaying = false;
 
 	recorder?.stop();
+	visualizer?.stop();
 
+	// Dispose of the synth after a short delay to allow the release phase to finish and avoid cutting off the sound abruptly.
 	setTimeout(() => {
 		synth?.dispose();
 		recorder = null;
