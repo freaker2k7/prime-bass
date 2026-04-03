@@ -3,6 +3,7 @@ import './main.scss';
 import type { FilterRollOff, FilterType, OscillatorType } from './types';
 
 let isPlaying: boolean = false;
+let recorder: MediaRecorder | null = null;
 let synth: Tone.MonoSynth | null = null;
 
 // Standard bass tuning (Hz)
@@ -28,9 +29,51 @@ function fretToFreq(openFreq: number, fret: number, frets: number): number {
 	return openFreq * Math.pow(2, fret / frets);
 }
 
-async function play() {
-	(document.getElementById('play-button') as HTMLInputElement).value = 'Stop Bass';
+function record(synth: Tone.MonoSynth): MediaRecorder {
+	(document.getElementById('form') as HTMLFormElement).querySelector('#download')?.remove();
+
+	// --- Recording Setup ---
+	const dest = Tone.getContext().createMediaStreamDestination();
+	synth.connect(dest);
+	const mediaRecorder = new MediaRecorder(dest.stream);
+	let recordedChunks: BlobPart[] = [];
+
+	mediaRecorder.ondataavailable = (event) => {
+		if (event.data.size > 0) {
+			recordedChunks.push(event.data);
+		}
+	};
+
+	mediaRecorder.start();
+
+	// Save the recorded audio
+	mediaRecorder.onstop = () => {
+		const blob = new Blob(recordedChunks, { type: 'audio/wav' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+
+		a.id = 'download';
+		a.href = url;
+		a.innerHTML = 'Download';
+		a.download = 'recording.wav';
+		(document.getElementById('form') as HTMLFormElement).appendChild(a);
+
+		a.onclick = () => {
+			setTimeout(() => {
+				window.URL.revokeObjectURL(url);
+				recordedChunks = [];
+			}, 0);
+		};
+	};
+
+	return mediaRecorder;
+}
+
+async function play(e: SubmitEvent) {
+	(document.getElementById('play-button') as HTMLInputElement).value = '⏹';
 	isPlaying = true;
+
+	const submitter = (e.submitter as HTMLInputElement)?.name;
 
 	const eventDuration = parseInt((document.getElementById('duration') as HTMLInputElement).value || '150') / 1000; // in seconds
 	const numFrets = parseInt((document.getElementById('frets') as HTMLInputElement).value || '19');
@@ -63,6 +106,11 @@ async function play() {
 		},
 	}).toDestination();
 
+	if (submitter === 'record') {
+		(document.getElementById('record-button') as HTMLInputElement).value = '⏸';
+		recorder = record(synth);
+	}
+
 	/*
 	In order not to check for the 5 (prime number) every time,
 	we initialize 1 & 3 and start the loop from 7, which is the next prime number.
@@ -84,16 +132,25 @@ async function play() {
 			);
 		}
 	}
+
+	// End synth after the last note
+	const stopAt = now + eventDuration * (numPrimes + 1);
+	synth.triggerRelease(stopAt);
+	Tone.getDraw().schedule(stop, stopAt);
 }
 
 function stop() {
-	(document.getElementById('play-button') as HTMLInputElement).value = 'Play Bass';
+	(document.getElementById('play-button') as HTMLInputElement).value = '▶';
+	(document.getElementById('record-button') as HTMLInputElement).value = '⏺';
 	isPlaying = false;
 
-	if (synth) {
-		synth.dispose();
+	recorder?.stop();
+
+	setTimeout(() => {
+		synth?.dispose();
+		recorder = null;
 		synth = null;
-	}
+	}, 0);
 }
 
 (document.getElementById('form') as HTMLFormElement).addEventListener('submit', (e) => {
@@ -103,7 +160,7 @@ function stop() {
 		return stop();
 	}
 
-	play();
+	play(e);
 });
 
 (document.getElementById('advanced-settings-toggle') as HTMLInputElement).addEventListener('click', () => {
