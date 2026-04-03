@@ -36,7 +36,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to thi
 
 Feel free to contribute by submitting a pull request or opening an issue with your ideas and suggestions!<br>
 
-- Add synchronization with a query parameter to allow sharing specific settings.
 - Add more instruments and tunings.
 
 # 💪
