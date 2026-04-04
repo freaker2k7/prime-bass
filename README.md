@@ -30,13 +30,9 @@ Then we can play the notes in sequence to create a musical representation of the
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to this project.
-
-### TODO
-
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to this project.<br>
+<br>
 Feel free to contribute by submitting a pull request or opening an issue with your ideas and suggestions!<br>
-
-- Add more instruments and tunings.
 
 # 💪
 
