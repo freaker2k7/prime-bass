@@ -18,7 +18,7 @@ Alternatively, if you have an idea or suggestion that you'd like to discuss befo
 
 Please note that this project is released with a Contributor Code of Conduct.<br>
 By participating in this project, you agree to abide by its terms.<br>
-You can find the code of conduct [here](CODE_OF_CONDUCT.md).
+You can find the code of conduct [here](https://github.com/freaker2k7/prime-bass?tab=coc-ov-file).
 
 ## Attribution
 
