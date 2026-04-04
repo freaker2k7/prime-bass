@@ -30,7 +30,7 @@ Then we can play the notes in sequence to create a musical representation of the
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to this project.<br>
+See [CONTRIBUTING.md](https://github.com/freaker2k7/prime-bass?tab=contributing-ov-file) for details on how to contribute to this project.<br>
 <br>
 Feel free to contribute by submitting a pull request or opening an issue with your ideas and suggestions!<br>
 
