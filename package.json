@@ -21,7 +21,7 @@
 		"typescript": "6.0.2",
 		"vite": "8.0.16",
 		"vite-compatible-readable-stream": "3.6.1",
-		"vite-plugin-minify": "2.1.0",
+		"vite-plugin-minify": "3.0.0",
 		"vite-plugin-singlefile": "2.3.2"
 	},
 	"dependencies": {
