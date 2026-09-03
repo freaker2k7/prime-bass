@@ -1,7 +1,7 @@
 {
 	"name": "wallet",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.0.2",
 	"scripts": {
 		"dev": "vite --host 0.0.0.0",
 		"build": "tsc -b && vite build",

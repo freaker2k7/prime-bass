@@ -7,7 +7,7 @@ export class Visualizer {
 	private lines: { [string: string]: HTMLDivElement } = {};
 	private animationId: number | null = null;
 	private lineLength: number;
-	private windowMs = 5000; // how long the note stays on the screen in ms
+	private windowMs = 2000; // how long the note stays on the screen in ms
 
 	private readonly stringsMap: { [key: number]: string } = { 9: 'G', 7: 'D', 3: 'A', 1: 'E' };
 
@@ -21,7 +21,7 @@ export class Visualizer {
 		this.speed = options.speed || 80; // pixels per second
 		this.charWidth = options.charWidth || 10;
 
-		this.lineLength = Math.floor(((this.windowMs / 1000) * this.speed) / this.charWidth);
+		this.lineLength = 30;
 
 		this.startTime = performance.now();
 
