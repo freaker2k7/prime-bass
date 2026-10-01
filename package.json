@@ -18,7 +18,7 @@
 		"eslint": "10.8.0",
 		"immutable": "5.1.9",
 		"prettier": "3.9.4",
-		"sass": "1.102.0",
+		"sass": "1.105.0",
 		"typescript": "6.0.3",
 		"vite": "8.1.2",
 		"vite-compatible-readable-stream": "3.6.1",
