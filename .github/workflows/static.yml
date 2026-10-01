@@ -41,7 +41,7 @@ jobs:
         uses: actions/configure-pages@v6
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: Lint
         run: npm run lint
