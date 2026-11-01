@@ -17,7 +17,7 @@
 		"@typescript-eslint/eslint-plugin": "8.70.1",
 		"eslint": "10.11.0",
 		"immutable": "5.1.9",
-		"prettier": "3.9.9",
+		"prettier": "3.9.10",
 		"sass": "1.105.0",
 		"typescript": "6.0.3",
 		"vite": "8.3.1",
